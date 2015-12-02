@@ -1,0 +1,75 @@
+\begin{thebibliography}{12}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{{\tt #1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+
+\bibitem[{Agrawal \& Goyal(2011)}]{agrawal2011analysis}
+Agrawal, S., \& Goyal, N. (2011).
+\newblock Analysis of thompson sampling for the multi-armed bandit problem.
+\newblock {\em arXiv preprint arXiv:1111.1797\/}.
+
+\bibitem[{Bramley et~al.()Bramley, Dayan, \& Lagnado}]{bramleystaying}
+Bramley, N.~R., Dayan, P., \& Lagnado, D.~A. (????).
+\newblock Staying afloat on neurath’s boat -- heuristics for sequential
+  causal learning.
+
+\bibitem[{Duff(2002)}]{duff2002optimal}
+Duff, M.~O. (2002).
+\newblock {\em Optimal Learning: Computational procedures for Bayes-adaptive
+  Markov decision processes\/}.
+\newblock Ph.D. thesis, University of Massachusetts Amherst.
+
+\bibitem[{Feldbaum(1960)}]{feldbaum1960dual}
+Feldbaum, A. (1960).
+\newblock Dual control theory. i.
+\newblock {\em Avtomatika i Telemekhanika\/}, {\em 21\/}(9), 1240--1249.
+
+\bibitem[{Hennig(2011)}]{hennig2011optimal}
+Hennig, P. (2011).
+\newblock Optimal reinforcement learning for gaussian systems.
+\newblock In {\em Advances in Neural Information Processing Systems\/}, (pp.
+  325--333).
+
+\bibitem[{Klenske \& Hennig(2015)}]{klenske2015dual}
+Klenske, E.~D., \& Hennig, P. (2015).
+\newblock Dual control for approximate bayesian reinforcement learning.
+\newblock {\em arXiv preprint arXiv:1510.03591\/}.
+
+\bibitem[{Parpart et~al.(2015)Parpart, Schulz, Speekenbrink, \&
+  Love}]{parpart2015active}
+Parpart, P., Schulz, E., Speekenbrink, M., \& Love, B.~C. (2015).
+\newblock Active learning as a means to distinguish among prominent decision
+  strategies.
+\newblock In {\em Proceedings of the Thirty-Seventh Annual Conference of the
+  Cognitive Science Society\/}.
+
+\bibitem[{Poupart(2010)}]{poupart2010bayesian}
+Poupart, P. (2010).
+\newblock Bayesian reinforcement learning.
+\newblock In {\em Encyclopedia of Machine Learning\/}, (pp. 90--93). Springer.
+
+\bibitem[{Schulz et~al.(2015{\natexlab{a}})Schulz, Konstantinidis, \&
+  Speekenbrink}]{schulzexploration}
+Schulz, E., Konstantinidis, E., \& Speekenbrink, M. (2015{\natexlab{a}}).
+\newblock Exploration-exploitation in a contextual multi-armed bandit task.
+
+\bibitem[{Schulz et~al.(2015{\natexlab{b}})Schulz, Konstantinidis, \&
+  Speekenbrink}]{schulzlearning}
+Schulz, E., Konstantinidis, E., \& Speekenbrink, M. (2015{\natexlab{b}}).
+\newblock Learning and decisions in contextual multi-armed bandit tasks.
+
+\bibitem[{Srinivas et~al.(2009)Srinivas, Krause, Kakade, \&
+  Seeger}]{srinivas2009gaussian}
+Srinivas, N., Krause, A., Kakade, S.~M., \& Seeger, M. (2009).
+\newblock Gaussian process optimization in the bandit setting: No regret and
+  experimental design.
+\newblock {\em arXiv preprint arXiv:0912.3995\/}.
+
+\bibitem[{Vlassis et~al.(2012)Vlassis, Ghavamzadeh, Mannor, \&
+  Poupart}]{vlassis2012bayesian}
+Vlassis, N., Ghavamzadeh, M., Mannor, S., \& Poupart, P. (2012).
+\newblock Bayesian reinforcement learning.
+\newblock In {\em Reinforcement Learning\/}, (pp. 359--386). Springer.
+
+\end{thebibliography}

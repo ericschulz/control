@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Eric Schulz">
+    <meta charset="utf-8">
+
+
+    <title>Sailing Contest</title>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script> 
+    <script src="https://dl.dropboxusercontent.com/u/4213788/d3.min.js" charset="utf-8"></script>
+    <script src='https://cdn.firebase.com/js/client/1.1.1/firebase.js'></script>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="https://dl.dropboxusercontent.com/u/4213788/bootstrap.css" rel="stylesheet" type="text/css">
+
+ </head>
+     <body>
+ 
+        <div class="container">
+            <div class="row">
+ 
+                <div id="page1" style="display:block">
+                  <h3>Welcome: </h3>
+                  <p> This study is part of a research project conducted by Eric Schulz, Paula Parpart, Neil R. Bramley, and Maarten Speekenbrink of University College London. </p>
+                  <p> In this study we want to investigate how humans learn to control dynamic systems.</p>
+                  <p> Please read the instruction carefully and try to perform as well as you can.</p>
+                  <p> If you have any questions, please write an email to <font color="blue">eric.schulz.13@ucl.ac.uk</font></p>
+                  <p></p>
+                  <button type="button" name="button"; onclick="clickStart('page1', 'page2')"; >Continue</button>
+                </div>
+
+
+               <!--Second page contains Ethics statement-->
+               <div id="page2" style="display:none">
+                  <h3>Consent form for participation in this online experiment</h3>
+                  <p> This study has been approved by UCL CPB Department's Ethics Chair: CPB/2015/12 <br>
+                      Designed by: Eric Schulz <br>
+              	      Email: <font color="blue">eric.schulz.13@ucl.ac.uk</font><br>
+                  </p>
+                  <p>We would like to invite you to participate in this research project. You should only participate if you want to; choosing not to take part will not disadvantage you in any way. Before you decide whether you want to take part, it is important for you to read the following information carefully and discuss it with others if you wish. Ask us if there is anything that is not clear or you would like more information.</p>
+                 <p>We are investigating how people make sense out of their environment. In this study you will perform a simple computer task in which you need to control a boat within a sailing competition.   In order to control the boat, you will have to learn how the underlying current of the sea changes the boats direction over time and correct for that. </p>
+                  <p>The study should not take longer than 10 minutes. Upon completion of the study, you will be paid a basic fee of $ 0.5 and an additional bonus between 0 and $ 0.5 depending on your sailing performance.</p>
+                  <p>All data will be handled according to the Data Protection Act 1998. All responses are treated as confidential and anonymous. All data will be pooled and published in aggregate form only. Only Eric Schulz and researchers working with him will have access to these data. </p>
+                  <p>It is up to you to decide whether or not to take part. If you choose not to participate it will involve no penalty or loss of benefits to which you are otherwise entitled. If you decide to take part you are still free to withdraw at any time and without giving a reason.</p>
+                  
+                  <p>By clicking on the button below, you agree to the following:</p>
+                  <br>
+                  <p>I have read the above information.</p>
+                  <p>I understand that I am free to withdraw from the study without penalty if I so wish and I consent to the processing of my personal information for the purposes of this study only and that it will not be used for any other purpose. I understand that such information will be treated as strictly confidential and handled in accordance with the provisions of the Data Protection Act 1998. </p>
+                  <p>I understand that the information I have submitted will be published as a report. Confidentiality and anonymity will be maintained and it will not be possible to identify me from any publications. I understand that I am being paid for my assistance in this research.
+                  </p>
+                  <br>
+                  <button type="button" name="button"; onclick="clickStart('page2','page4')"; >Agree</button>
+               </div>
+
+                <div id="page3" style="display:none">
+                    <h3>Instructions:</h3>
+                <p><b>Please read the following instructions very carefully: </b></p>
+                <br>
+                <p> In the following study, it is your task to sail a boat as well as you can. For this you have to aim for a direction such that you end up at points on which you will receive high evaluation points. </p>
+                <p> You will see a graph just like the one on the next page. You can then determine a value of the input that you want to investigate. After you have made a choice of input value, you will see the corresponding output value. The output value is determined by the underlying relation and added to the graph.</p>
+                <p>You have a total amount of 40 observations available. That means you have <b>40</b> chances to enter an input and observe the output for that input. It is your task to choose the input wisely, so that you get a good feeling for which output is produced at different input points.</p>
+                <p>Even though inputs are direclty related to outputs, there is some variation in the ouputs produced by an input value. This means that observed output points for some inputs can vary slightly and are not always the same. It is your task to determine how much they can vary. The way they vary is the same across all points, which means that you will not encounter big deviations for one input value and small deviations at others.</p> 
+                <p>After the learning task, you will be confronted with a short test to check how well you have learned the relations between inputs and
+                outputs. Your reward will be based on your performance in the test.</p>  
+                <p>For every task, you will see a page with the instructions, an input slider, and the graph. You can hide the instructions by clicking "Hide explanations". You can show them by pressing "Show explanations".</p>
+                <br><br>
+                <p><b>Please click on the button below to start.</b></p>
+                        <div style="width:500px;margin:0 auto">
+                          <button type="button" name="button"; onclick="getstarted()"; >Start the task</button>  
+                        </div>
+                </div>
+
+
+
+                <div id="page4" style="display:none">
+                         <h1> <font size="4">Please try to sail as well as you can.</font> </h1>
+                         <div id="explainshow" style="display:block">
+                         <p> <b>Explanation:</b></p><br>
+                         <p><b>I.</b> The <font color="green">green dot</font> marks the <font color="green">direction</font> you are aiming for at each round. When you move the slider, the green dot will move around as well. </p>
+                         <p><b>II.</b> When you click on "GO" the value of the green dot at that moment will be used as an input and you will sail in that direction. However, the sea has an underlying current, so you will normally not end up at exactly the place you were aiming for. </p>
+                         <p><b>III.</b> You get evaluated at each round by how close you are to the dark blue bits. The darker the blue, the more points you will get. The redder, the less points you will get. You can get a maximum of 100 points per round.</p>
+                         <p><b>IV.</b> On top of the graph, you can see how many points you got at the current round and how many points you have gotten in total so far. Your payment later on will depend on the total score.</p>
+                         <p><b>V.</b>Remember, it is your task to sail the boat to the dark blue parts at each evaluation round. For this, you have to learn the underlying current of the sea and aim for the right direction in order to hit the good marks at each evaluation round.</p>
+                         <button type="button" name="buttona"; onclick="clickStart('explainshow','explainhide')"; >Hide explanation</button>
+                        </div>
+
+                      <div id="explainhide" style="display:none">
+                         <button type="button" name="button"; onclick="clickStart('explainhide','explainshow')"; >Show explanation </button>
+                      </div>
+                        <center><b><div id="currentscore">Current score: 0</div></b></center> 
+                        <center><b><div id="totalscore">Total score: 0</div></b></center> 
+                      <div style="width:640px;margin:0 auto">
+                          <div class="plot1"></div>
+                          <div id="slider1"></div>
+                          <span id="slider1value">0</span><br />
+                          <button type="button" name="button"; onclick="dotrial1()"; >GO</button>  
+                      </div>
+                      <br><br>
+                </div>
+
+
+                <div id="page5" style="display:none">
+                        <fieldset>
+                            <legend>Please tell us a bit about yourself</legend>
+                            <div style="float:left;width:400px;margin:5px">
+                                How old are you?<br>
+                                <input id="age" type="radio" name="age" value="20" >18-25<br>
+                                <input id="age" type="radio" name="age" value="30" >26-35<br>
+                                <input id="age" type="radio" name="age" value="40" >36-50<br>
+                                <input id="age" type="radio" name="age" value="50" >above 50<br>
+                            </div>
+                            
+                            <div style="float:left;width:400px;margin:5px">
+                                What's your gender?<br>
+                                <input id="gender" type="radio" name="gender" value="0" >Female<br>
+                                <input id="gender" type="radio" name="gender" value="1" >Male<br>
+                            </div>
+
+                         </fieldset>
+                        <div style="width:50px;margin:0 auto">
+                         <button type="button" name="button"; onclick="senddata()"; >Done</button>
+                        </div>
+                </div>
+
+                <div id="page6" style="display:none">
+                    <h3>Thank you for participating in our experiment.</h3>
+                    <div id="result"></div><br>
+                    <div id="money"></div><br>
+                    <p>Your MTurk codes is: <b>control2015</b></p>
+                </div>
+            </div>
+        </div>
+        <script src="js/control.js" charset="utf-8"></script>
+    </body>
+</html>

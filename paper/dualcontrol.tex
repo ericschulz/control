@@ -1,0 +1,214 @@
+% 
+% Annual Cognitive Science Conference
+% Sample LaTeX Paper -- Proceedings Format
+
+
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{cogsci}
+\usepackage{color}
+\usepackage[hidelinks]{hyperref}
+\usepackage{placeins}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+\title{Learning and Decision Making in Dual Control Scenarios}
+ \author{\textbf{Eric Schulz} (eric.schulz.13@ucl.ac.uk), \textbf{Paula Parpart} (paula.parpart.10@ucl.ac.uk ),\\ \textbf{Neil R. Bramley} (neil.bramley.10@ucl.ac.uk ) \& \textbf{Maarten Speekenbrink} (m.speekenbrink@ucl.ac.uk)}
+
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+In a dual control scenario participants have to control a non-episodic, finite-horizon dynamical system. This provides an informative paradigm to assess active learning and choice making behaviour in an exploration-exploitation environment, in which participants' actions influence outcomes, states, and where the reward function can change over time. We let participants control an environment called ``Spaceship'',  in which they have to navigate a spaceship on a trajectory to avoid damage over time with changes of underlying reward functions. Results show that participants sensibly trade-off between exploration and exploitation behaviour in dependency of the current reward function and are overall best described by an approximate Bayesian dual control algorithm.\\
+\textbf{Keywords:} 
+Dual Control, Reinforcement Learning, Gaussian Process, Active Learning, Heuristics
+\end{abstract}
+\section{Introduction}
+Many learning scenarios require us to trade-off \emph{exploration} (learning about an underlying relationship) and \emph{exploitation} (maximizing it). Within simple episodic settings in which the dynamics do not change, simple notions of trading off exploration and exploitation such as assigning an uncertainty based exploration bonus \citep{srinivas2009gaussian} or probability matching of expected outcomes \citep{agrawal2011analysis}, also known as Thompson sampling, are efficient strategies that capture participants' behaviour well \citep{schulzlearning, schulzexploration}.
+
+However, many real world scenarios are non-episodic, which means that our actions influence the system we are in and it is our task to control a single, ongoing trial. Within such scenarios, we might not return to known states and therefore have to treat exploration with great caution to avoid big disasters \citep{klenske2015dual}. These problems are normally approached via Bayesian reinforcement learning \citep{poupart2010bayesian}, which assigns probabilistic beliefs over the dynamics of the environment and the occurring costs to reason about changes to beliefs from future observations, and their influence on future decisions \citep{duff2002optimal}. The attempt to combine the physical state with the parameters of the probabilistic model into an augmented dynamical model with the aim to control the resulting system is, however, computationally expensive \citep{hennig2011optimal} and therefore its solution can only be approximated \citep{vlassis2012bayesian}. The idea of augmenting the physical state with model parameters was coined early as \emph{dual control} \citep{feldbaum1960dual} and has recently been adapted to approach inference in Bayesian reinforcement problems \citep{klenske2015dual}.
+ 
+In what follows, we will build on \cite{klenske2015dual} work and introduce different models for dual control and apply those to how humans learn in a simple control task. We find that participants are best described by a Gaussian Process approximate dual control algorithm. Given the assumption that participants active learning behaviour is indicative of their underlying cognitive processes \citep{parpart2015active}, this means tha
+
+\section{Problem set-up}
+Throughout all experiments we assume the following state dynamics
+\begin{align*}
+x_{k+1}=f_k(x_k, u_k)+\xi_k
+\end{align*}
+paired with the following observation model
+
+\begin{align*}
+y_k=Cx_k+\gamma_k.
+\end{align*}
+Furthermore, we assume a system with unknown dynamics that can, up to Gaussian noise, be described by a general linear model with nonlinear feature projections. 
+\begin{align*}
+x_{k+1}=A_k \phi(x_k)+B_ku_k+\xi_k
+\end{align*}
+Given a finite time horizon with terminal Time $T$ and the following quadratic cost function.
+\begin{align*}
+\mathcal{L}(\mathbf{x,u})=\left[\sum_{k=0}^T(x_k-r_k)^\top W_k(x_k-r_k)+\sum_{k=0}^{T-1}u_k^\top U_ku_k \right]
+\end{align*}
+where $\mathbf{r}=[r_0, \dots, r_T]$ is the target trajectory and $W_k$ and $U_k$ are the potentially time-varying state and control costs. The goal is now at each time point $k$ to find the action sequence $\mathbf{u}$ that minimizes the expected cost to the horizon $T$.
+
+\section{Models}
+\subsection{Certainty equivalence}
+If target $r_k=0$ and noise free observations, when $a$ and $b$ are known, optimal $u_k$ to drive $x_k$ to 0:
+
+\begin{align*}
+u_k^\star=\frac{abx_k}{U+b^2}
+\end{align*}
+Certainty equivalence control simply replaces the parameter above with a mean estimate. 
+\begin{align*}
+u_k^\star=\frac{a\mu_kx_k}{U+\mu_k^2}
+\end{align*}
+This, however, can lead to bad estimations if the variance is high and overshooting reactions after regime changes.
+\subsection{Cautious control}
+Cautious control  calculates expected cost $\mathbb{E}[x_{k+1}^2+Uu_k^2]$ and then optimizes with respect to $u_k$.
+\begin{align*}
+u_k^\star=\frac{a\mu_kx_k}{U+\sigma_k^2+\mu_k^2}
+\end{align*}
+This control law scales down control actions in cases of high parameter uncertainty. However, this can also lead to one of the major drawbacks of the ``cautious controller'', which is that it decreases control with rising uncertainty, an effect commonly called ``turn-off phenomenon''. 
+
+\subsection{Bayesian exploration bonus}
+Both of the aforementioned control algorithms are passive learners, that is they do not explore the parameter space actively and thereby might miss out on some important information that might become more important later on. 
+A simple adaptation to introduce exploration into the certainty equivalent controller is to introduce a Bayesian exploration bonus, measure by the standard deviation at each observation point.
+\begin{align*}
+l_{BEB}=\tau\left[\sqrt{\text{diag}(\Sigma^{\theta\theta})} \right]^\top \left[\sqrt{\text{diag}(\Sigma^{\theta\theta})} \right]
+\end{align*}
+Even though this model manages to trade-off between exploration and exploitation directly, it is still myopic in that it only calculates that step with one look ahead.
+
+\subsection{Approximate Dual Control}
+Approximate control is based on a simulation of the future that also tries to learn the underlying functions.
+\section{Experiment}
+\subsection{Design}
+We are considering the example of a cart on a rail taken from \citep{klenske2015dual}. We will firstly describe the mathematical set up of that problem before then explaining how we transformed it into an actual experimental paradigm. The dynamics of the to be controlled environment are described by the following Equation:
+\begin{align*}
+x_{k+1}=\begin{bmatrix}
+1 & 0.4\\
+0 & 1\\
+\end{bmatrix}
+x_k
+\begin{bmatrix}
+0 & 0\\
+\theta^1 & \theta^2\\
+\end{bmatrix}
++
+\begin{bmatrix}
+\phi^1(x_k)\\
+\phi^2(x_k)\\
+\end{bmatrix}
++
+\begin{bmatrix}
+0\\
+1\\
+\end{bmatrix}
+u_k
+\end{align*}
+The non-linear functions $\phi^1$ and $\phi^2$ are defined as shown below.
+\begin{align*}
+\phi^1(x)=-\frac{1}{1+\exp(x+5)},~~\phi^2(x)=\frac{1}{1+\exp(x+5)}
+\end{align*}
+ and the true underlying parameters
+\begin{align*}
+\theta_{true}=\begin{bmatrix}
+0.8\\
+0.4\\
+\end{bmatrix}
+\end{align*}
+This means that the true underlying functions and how they interact has to be learned while at the same time tracking the current reference point. The reference point is the current value that should be put out by the system at the next step. The to be tracked references are:
+\begin{align*}
+\mathbf{r}_{0:11}&=
+\begin{bmatrix}
+0\\
+0\\
+\end{bmatrix}~
+\mathbf{r}_{12:14}=
+\begin{bmatrix}
+10\\
+0\\
+\end{bmatrix}~
+\mathbf{r}_{15}=
+\begin{bmatrix}
+0\\
+0\\
+\end{bmatrix}\\
+\mathbf{r}_{16:18}&=
+\begin{bmatrix}
+0\\
+0\\
+\end{bmatrix}~
+\mathbf{r}_{19:20}=
+\begin{bmatrix}
+0\\
+0\\
+\end{bmatrix}
+\end{align*}
+This means that the reference point changes over a total of 20 trials and the goal is always to create an output as close as possible to the current (and future) reference points.
+
+The state weighting also changes over time as shown below.
+\begin{align*}
+\mathbf{W}_{0:5}&=
+\begin{bmatrix}
+10 & 0\\
+0 & 0\\
+\end{bmatrix}~
+\mathbf{W}_{5:10}=
+\begin{bmatrix}
+0 & 0\\
+0 & 0\\
+\end{bmatrix}~
+\mathbf{W}_{11:20}=
+\begin{bmatrix}
+100 & 0\\
+0 & 0\\
+\end{bmatrix}\\
+\end{align*}
+This means that an initial stage of low state costs is followed by a stage of no costs at all which then leads to a stage of very high cost. Therefore, a well-adapted agent would first explore the space a little bit under low cost, then massively explore when there are no costs involved, just to control the outcome well during the last high cost stage.
+
+\subsection{Materials}
+Participants were told that they had to navigate a space ship through outer space.
+
+\subsection{Participants}
+N participants were recruited via Prolific Academic and received \pounds 1 as a basic reward as well as a performance-dependent reward of up to \pounds 1.
+\section{Results}
+Raw results of overall costs per participants are shown below.\\
+
+It can be seen that participants learn over time and perform better than both the certainty equivalence or the cautious control model would predict. The denisty over sample points by round is shown below.\\
+It seems to be clearly the case that participants use the phase of zero punishment to explore the function as much as they can, which speaks in favour of the Approximate Dual Control model.\\
+All models were fitted to participant's choices by using a softmax function as shown below.
+\begin{align*}
+\label{softmax}
+\sigma(z_{jt}) = \left\{\frac{\exp(\theta z_{jt})}{\sum_{k=1}^{K}\exp(\theta z_{kt})}\right\}
+\end{align*}
+The resulting optimise log-loss then was used to calculate Akaike's ``An Information Criterion'' for each model per participants. Results are shown in Table 1 below.
+\begin{table}[h!]
+\caption{AIC of different models.}
+\label{results}
+\begin{tabular}{lccc}
+\hline
+Method& $AIC_{mean}$ & $AIC_{SD}$ &\#best\\ \hline
+Random&&\\
+Certainty equivalent &&\\
+Cautious control&&\\
+Exploration bonus&&\\
+Approximate Control&&
+\end{tabular}
+\end{table}
+
+
+\section{Discussion and Conclusion}
+Scenarios in which we have to explore and exploit underlying functions are ubiquitous to every day life. In many cases, our current choices will influence where we will end up in the future and once visited states might not always be possible to return to. Dual control provides a good paradigm to assess participants' behaviour in such tasks. We showed that participants do efficient ahead planning in a simple control task (controlling a space ship) and were best described by a Gaussian Process approximate dual control algorithm. This can only be seen as a first step towards assessing human behaviour in such tasks and other, more psychologically plausible models, might explain participants' behaviour even better \citep{bramleystaying}. 
+\section{Acknowledgements}
+Work supported by the UK Centre of Financial Computing.
+\bibliographystyle{apa-good}
+\bibliography{Bibo}
+\end{document}

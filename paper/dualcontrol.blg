@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: dualcontrol.aux
+The style file: apa-good.bst
+Database file #1: Bibo.bib
+Warning--empty year in bramleystaying; set to ????
+Warning--empty journal in bramleystaying
+Warning--empty journal in schulzexploration
+Warning--empty journal in schulzlearning
+You've used 12 entries,
+            2804 wiz_defined-function locations,
+            639 strings with 6397 characters,
+and the built_in function-call counts, 6648 in all, are:
+= -- 542
+> -- 264
+< -- 9
++ -- 100
+- -- 87
+* -- 473
+:= -- 1056
+add.period$ -- 35
+call.type$ -- 12
+change.case$ -- 96
+chr.to.int$ -- 11
+cite$ -- 16
+duplicate$ -- 499
+empty$ -- 494
+format.name$ -- 119
+if$ -- 1304
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 95
+newline$ -- 64
+num.names$ -- 48
+pop$ -- 238
+preamble$ -- 1
+purify$ -- 77
+quote$ -- 0
+skip$ -- 208
+stack$ -- 0
+substring$ -- 251
+swap$ -- 233
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 108
+warning$ -- 4
+while$ -- 47
+width$ -- 0
+write$ -- 151
+(There were 4 warnings)
