@@ -14,12 +14,16 @@
 \usepackage{amsmath, amssymb}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage[textsize = tiny,color=green]{todonotes} %for inserting comments
+\setlength{\marginparwidth}{1.5cm} %sets the comment margin
+%\usepackage{showframe}
+
 \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
 
 
 \title{Learning and Decision Making in Dual Control Scenarios}
- \author{\textbf{Eric Schulz} (eric.schulz.13@ucl.ac.uk), \textbf{Paula Parpart} (paula.parpart.10@ucl.ac.uk ),\\ \textbf{Neil R. Bramley} (neil.bramley.10@ucl.ac.uk ) \& \textbf{Maarten Speekenbrink} (m.speekenbrink@ucl.ac.uk)}
+ \author{\textbf{Eric Schulz} (eric.schulz.13@ucl.ac.uk), \textbf{Paula Parpart} (paula.parpart.10@ucl.ac.uk ),\\ \textbf{Neil R. Bramley} (neil.bramley@ucl.ac.uk ), \textbf{Maarten Speekenbrink} (m.speekenbrink@ucl.ac.uk)}
 
 
 \begin{document}
@@ -33,11 +37,11 @@ In a dual control scenario participants have to control a non-episodic, finite-h
 Dual Control, Reinforcement Learning, Gaussian Process, Active Learning, Heuristics
 \end{abstract}
 \section{Introduction}
-Many learning scenarios require us to trade-off \emph{exploration} (learning about an underlying relationship) and \emph{exploitation} (maximizing it). Within simple episodic settings in which the dynamics do not change, simple notions of trading off exploration and exploitation such as assigning an uncertainty based exploration bonus \citep{srinivas2009gaussian} or probability matching of expected outcomes \citep{agrawal2011analysis}, also known as Thompson sampling, are efficient strategies that capture participants' behaviour well \citep{schulzlearning, schulzexploration}.
+A common problem in cognition is balancing \emph{exploration} (learning about underlying relationships) and \emph{exploitation} (maximising utilities given these beliefs). Within simple \textit{episodic} settings, in which the dynamics of the problem do not change from decision point to decision point, simple rules often allow efficient trade-offs.  For instance, schemes that assign uncertainty based exploration bonuses \citep{srinivas2009gaussian} or that choose actions by probability matching expected outcomes \citep[e.g. Thompson sampling][]{agrawal2011analysis} can perform efficiently \todo{ref paper showing thomspon sampling can be optimal?} and also often capture participants' behaviour \citep{schulzlearning, schulzexploration}\todo{ref probability matching lit review?}.  However, many real world scenarios are non-episodic, meanings that the structure of the problem can change over time and depending on the current state \todo{Right?}.  This means that learners are often in a tougher position, needing to balance exploration with dynamic control \citep{osman2010controlling}.
 
-However, many real world scenarios are non-episodic, which means that our actions influence the system we are in and it is our task to control a single, ongoing trial. Within such scenarios, we might not return to known states and therefore have to treat exploration with great caution to avoid big disasters \citep{klenske2015dual}. These problems are normally approached via Bayesian reinforcement learning \citep{poupart2010bayesian}, which assigns probabilistic beliefs over the dynamics of the environment and the occurring costs to reason about changes to beliefs from future observations, and their influence on future decisions \citep{duff2002optimal}. The attempt to combine the physical state with the parameters of the probabilistic model into an augmented dynamical model with the aim to control the resulting system is, however, computationally expensive \citep{hennig2011optimal} and therefore its solution can only be approximated \citep{vlassis2012bayesian}. The idea of augmenting the physical state with model parameters was coined early as \emph{dual control} \citep{feldbaum1960dual} and has recently been adapted to approach inference in Bayesian reinforcement problems \citep{klenske2015dual}.
+Within such scenarios, we might not return to known states and therefore have to treat exploration with great caution to avoid disaster \citep{klenske2015dual}. These problems have been approached via Bayesian reinforcement learning \citep{poupart2010bayesian}.  For instance, by assigning probabilistic beliefs over both the dynamics of the environment and the utilities, one can perform inference about what actions will lead to the best long-run balance of exploration and control \citep{duff2002optimal}. Combining inference about the physical state and the parameters of the probabilistic model creates what is known as an \textit{augmented dynamical model} which can be used to efficiently control and learn about a system.  However, this is computationally expensive \citep{hennig2011optimal} and therefore can typically only be approximated \citep{vlassis2012bayesian}. The technique of augmenting the physical state with model parameters was coined early as \emph{dual control} \citep{feldbaum1960dual} and has recently been adapted to approach inference in Bayesian reinforcement problems \citep{klenske2015dual}.
  
-In what follows, we will build on \cite{klenske2015dual} work and introduce different models for dual control and apply those to how humans learn in a simple control task. We find that participants are best described by a Gaussian Process approximate dual control algorithm. Given the assumption that participants active learning behaviour is indicative of their underlying cognitive processes \citep{parpart2015active}, this means tha
+In what follows, we will build on \cite{klenske2015dual} work and introduce several dual control models and apply them to modelling how humans learn in a simple control task. We find that participants are best described by a Gaussian Process approximate dual control algorithm. Given the assumption that participants active learning behaviour is indicative of their underlying cognitive processes \citep{parpart2015active}, this means that\todo{haha, a bit pre-emptive!}
 
 \section{Problem set-up}
 Throughout all experiments we assume the following state dynamics
@@ -57,7 +61,7 @@ Given a finite time horizon with terminal Time $T$ and the following quadratic c
 \begin{align*}
 \mathcal{L}(\mathbf{x,u})=\left[\sum_{k=0}^T(x_k-r_k)^\top W_k(x_k-r_k)+\sum_{k=0}^{T-1}u_k^\top U_ku_k \right]
 \end{align*}
-where $\mathbf{r}=[r_0, \dots, r_T]$ is the target trajectory and $W_k$ and $U_k$ are the potentially time-varying state and control costs. The goal is now at each time point $k$ to find the action sequence $\mathbf{u}$ that minimizes the expected cost to the horizon $T$.
+where $\mathbf{r}=[r_0, \dots, r_T]$ is the target trajectory and $W_k$ and $U_k$ are the potentially time-varying state and control costs. The goal is now at each time point $k$ to find the action sequence $\mathbf{u}$ that minimizes the expected cost to the horizon $T$.\todo{When you get a chance can you introduce all these variables in the text around the eqs? E.g. would help me be clearer what us going on $x,y,A,C, k,\xi,u,W,T$}
 
 \section{Models}
 \subsection{Certainty equivalence}
@@ -206,7 +210,7 @@ Approximate Control&&
 
 
 \section{Discussion and Conclusion}
-Scenarios in which we have to explore and exploit underlying functions are ubiquitous to every day life. In many cases, our current choices will influence where we will end up in the future and once visited states might not always be possible to return to. Dual control provides a good paradigm to assess participants' behaviour in such tasks. We showed that participants do efficient ahead planning in a simple control task (controlling a space ship) and were best described by a Gaussian Process approximate dual control algorithm. This can only be seen as a first step towards assessing human behaviour in such tasks and other, more psychologically plausible models, might explain participants' behaviour even better \citep{bramleystaying}. 
+Scenarios in which we have to explore and exploit underlying functions are ubiquitous to every day life. In many cases, our current choices will influence where we will end up in the future and once visited states might not always be possible to return to. Dual control provides a good paradigm to assess participants' behaviour in such tasks. We showed that participants do efficient ahead planning in a simple control task (controlling a space ship) and were best described by a Gaussian Process approximate dual control algorithm. This can only be seen as a first step towards assessing human behaviour in such tasks and other, more psychologically plausible models, might explain participants' behaviour even better \citep{bramley2015staying}. 
 \section{Acknowledgements}
 Work supported by the UK Centre of Financial Computing.
 \bibliographystyle{apa-good}
