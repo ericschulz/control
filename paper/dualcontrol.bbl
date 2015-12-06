@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{{\tt #1}}\fi
@@ -9,10 +9,12 @@ Agrawal, S., \& Goyal, N. (2011).
 \newblock Analysis of thompson sampling for the multi-armed bandit problem.
 \newblock {\em arXiv preprint arXiv:1111.1797\/}.
 
-\bibitem[{Bramley et~al.()Bramley, Dayan, \& Lagnado}]{bramleystaying}
-Bramley, N.~R., Dayan, P., \& Lagnado, D.~A. (????).
-\newblock Staying afloat on neurath’s boat -- heuristics for sequential
-  causal learning.
+\bibitem[{Bramley et~al.(2015)Bramley, Dayan, \& Lagnado}]{bramley2015staying}
+Bramley, N.~R., Dayan, P., \& Lagnado, D.~A. (2015).
+\newblock Staying afloat on neurath’s boat--heuristics for sequential causal
+  learning.
+\newblock In {\em Proceedings of the 37th Annual Conference of the Cognitive
+  Science Society\/}, (pp. 262--267). Austin, TX: Cognitive Science Society.
 
 \bibitem[{Duff(2002)}]{duff2002optimal}
 Duff, M.~O. (2002).
@@ -35,6 +37,12 @@ Hennig, P. (2011).
 Klenske, E.~D., \& Hennig, P. (2015).
 \newblock Dual control for approximate bayesian reinforcement learning.
 \newblock {\em arXiv preprint arXiv:1510.03591\/}.
+
+\bibitem[{Osman(2010)}]{osman2010controlling}
+Osman, M. (2010).
+\newblock Controlling uncertainty: a review of human behavior in complex
+  dynamic environments.
+\newblock {\em Psychological bulletin\/}, {\em 136\/}(1), 65.
 
 \bibitem[{Parpart et~al.(2015)Parpart, Schulz, Speekenbrink, \&
   Love}]{parpart2015active}

@@ -1,0 +1,31 @@
+Some thoughts on the experiment:
+
+Nice! It's pretty intuitive and participants will find it fun and this is going to be a great set up to explore dynamic/dual control.
+
+Here's a bunch of initial reactions and proposed tweaks about the demo:
+
+--Instructions - "The green dot marks the direction" and "value of the green dot" - Do you mean the "location"? Is it the gap between the ship and the green dot, or the gap between the centre of the map and the green dot that marks the intended shift?
+
+--Importantly, its currently unspecified in the instructions whether the drift rate and/or the control rate are constant, linear, continuously changing, or whether either or both have some underlying function.  If they are constant the task is pretty easy right but conversely if there are no limits on how how the control and the drift change from step to step then the task is formally impossible.  So:  I think we need to tell participants a little more so they can at least make the same assumptions that we give to our models.
+
+--Also, I "explored" during the dark blue patch by keeping the slider in the centre.  I did this because it felt like my control was linear but I wanted to watch the rate of change of drift rate over several steps (i.e. is it curving one way or another etc).  Is this supposed to be the wrong thing to do? It felt pretty sensible to me.
+
+--It should be clear for both participants and the models what happens if you go near the edge. Maybe it should wrap around?  Maybe you just stay at the edge? Maybe you experience infinite dis-utility and die?  But whichever we do it changes the shape of the problem since it depending what we choose it changes the form of the functions (i.e. they become truncated or something, or we use polar coordinates so they can wrap around or something).
+
+--On a new step, with the ship off-centre but the slider set to the middle setting, why is the green dot still appearing in the centre of the screen? Why doesn't a slider-setting of 0 correspond to a green dot level with the current position of the ship? I thought the control was relative to the current location not absolute, right?
+
+--The slider position, and the dot do not reset properly on a new trial.  Currently the dot re-centres while the slider stays in its previous position.  Then if you then tap the slider without adjusting it the dot moves.  This is confusing!  We could also have the slider 'thumb' only appear upon click so you can't just leave it in place across trials.
+
+--Can the white gaps in the image be narrower, and can the shading of the value landscape be a little milder, i.e. mix it with some white?
+
+--Can the ship be quite a bit bigger? It might be tiny because I'm on a retina screen (which has double pixel density compared to normal screens) right now, we need to make sure the pixel ratio in the js is fixed to 1 otherwise all new macs will render it differently (something Tobi and I recently discovered).
+
+--Should we plot the path of the ship over the past for the participants?  Maybe this could this be a between-subs condition variation?
+
+--Its not immediately obvious why the slider isn't vertical and to the left.  Are you thinking to counterbalance the valence of the control function (e.g. sometimes up is right, sometimes its left?).
+
+--I think it would be nice to ask people to plot or describe their understanding of the control and the drift aspects after doing the task (i.e. to get a better idea how they encode things).  We could do this both within and beyond the experienced sea.
+
+
+
+

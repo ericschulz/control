@@ -1,0 +1,12 @@
+type commands beginning with 'git' into the terminal
+
+
+To push from local to remote version of branch:
+
+open terminal
+
+go to control folder
+
+git add .  -- adds (and removes?) all the files in the folders to the local git repository's index so they can then be pushed to the remote repository
+
+git commit -m "Test 3" — ‘stages’ these changes ready to push to the other branch?
